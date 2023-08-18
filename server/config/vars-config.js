@@ -9,6 +9,5 @@ export const DB_PASSWORD = process.env.DB_PASSWORD
 export const DB_PORT = process.env.DB_PORT
   ? parseInt(process.env.DB_PORT)
   : 3306
-export const DB_LOG_ERRORS = process.env.DB_LOG_ERRORS
 // Настройка express
 export const EXPRESS_APP_PORT = process.env.EXPRESS_APP_PORT

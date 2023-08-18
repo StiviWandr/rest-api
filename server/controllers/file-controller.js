@@ -17,7 +17,9 @@ class FileController {
     async list(req, res, next) {
         try {
             const { page, list_size } = req.query;
-            const files = await filesService.listFiles(page, list_size);
+            const pageNumber = page? Number(page) : 1
+            const list_sizeNumber = list_size? Number(list_size): 10
+            const files = await filesService.listFiles(pageNumber, list_sizeNumber);
             return res.json(files);
         } catch (e) {
             next(e);
@@ -57,8 +59,7 @@ class FileController {
             if (!file) {
                 throw ApiError.NotFound("File not found");
             }
-            const filePath = path.join(uploadsConfig.uploadPath, file.name + file.extension);
-            
+            const filePath = path.join(uploadsConfig.uploadPath, file.filePath);
             if (!fs.existsSync(filePath)) {
                 throw ApiError.NotFound("File not found");
             }

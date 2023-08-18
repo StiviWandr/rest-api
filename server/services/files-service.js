@@ -21,15 +21,17 @@ class FilesService {
         }
     }
 
-    async listFiles(page = 1, listSize = 10) {
+    async listFiles(page, limit) {
         try {
-            const offset = (page - 1) * listSize;
-            const files = await FileModel.findAll({
-                limit: listSize,
+            const offset = (page - 1) * limit;
+
+            const fileList = await FileModel.findAll({
+                limit,
                 offset,
-                attributes: ['id', 'name', 'extension', 'mimeType', 'size', 'uploadDate']
+                attributes: ['id', 'name', 'extension', 'mimeType', 'size', 'uploadDate', 'filePath']
             });
-            return files;
+
+            return fileList;
         } catch (error) {
             console.error('Error listing files:', error);
             throw error;
